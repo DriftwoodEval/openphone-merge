@@ -75,7 +75,7 @@ def reorganize(df):
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--demo", type=str, default="demographics.csv")
+    parser.add_argument("-d", "--demo", type=str, default="demographic.csv")
     parser.add_argument("-o", "--openphone", type=str, default="openphone.csv")
     args = parser.parse_args()
 
