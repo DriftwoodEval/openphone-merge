@@ -56,16 +56,18 @@ def use_preferred_name(df):
     return df
 
 
-def remove_duplicates(df1, df2):
-    for index, row in df1.iterrows():
-        if pd.notna(row.PHONE1):
-            phone_with_code = "+1" + str(row.PHONE1)
-            if (
-                row.PHONE1 in df2.phone_number_1.values
-                or phone_with_code in df2.phone_number_1.values
-            ):
-                df1.drop(index, inplace=True)
-    return df1
+def remove_duplicates(ta_df, op_df):
+    for index, row in ta_df.iterrows():
+        phone_digits = "".join(filter(str.isdigit, str(row.PHONE1)))
+        phone_with_code = "1" + phone_digits
+        if (
+            phone_digits
+            in op_df.phone_number_1.str.replace(r"\D", "", regex=True).values
+            or phone_with_code
+            in op_df.phone_number_1.str.replace(r"\D", "", regex=True).values
+        ):
+            ta_df.drop(index, inplace=True)
+    return ta_df
 
 
 def reorganize(df):
